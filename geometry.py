@@ -1,5 +1,12 @@
 # 21/02/2021
 
+# 24/02/2021
+# Make a clean code.
+# - Make it simple, stupid!
+# - Meaningful variables name
+# - Improve code until it's not necessary to write a obvious and redundant comments
+# - Let one function do merely one task
+
 import math
 import random
 
@@ -9,7 +16,7 @@ class Square():
 		return side * side
 
 
-geometry_problem = []
+geometry_questions = []
 def generate(exit_num):
 	status = 0
 	while status < exit_num:
@@ -17,29 +24,31 @@ def generate(exit_num):
 		sideg = random.randint(1, 10)
 		
 		if status < exit_num:
-			geometry_problem.append(sideg)
+			geometry_questions.append(sideg)
 			print(f'Side: {sideg}')
 
 		elif status == exit_num:
-			geometry_problem.append(sideg)
+			geometry_questions.append(sideg)
 			print(f'Side: {sideg}')
 
 
-# FIX!
-# Make sure that the i never changed until the input is correct
 def interaction():
 	user_exit_num = int(input('> '))
 	generate(user_exit_num)
-	status_i = 0
-	while status_i < len(geometry_problem):
-		for i in geometry_problem:
+	status = 0
+	while status < len(geometry_questions):
+		for i in geometry_questions:
 			print(Square.area(i))
 			UI = int(input('Area: '))
 			if UI == Square.area(i):
-				status_i += 1
+				status += 1
 				print(0)
-			else:
-				print(1)
+			elif UI != Square.area(i):
+				while UI != Square.area(i):
+					UI = int(input('Area: '))
+					if UI == Square.area(i):
+						status += 1
+						break
 
 
 interaction()
