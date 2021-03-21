@@ -2,21 +2,34 @@ import random
 import operator
 
 
-math_operators = ['+', '-', '*', '/']
-
-def generate(exit_num):
-	math_problem = []
-	status = 0
-	while status < exit_num:
-		status += 1
-		number_generator = str(random.randint(1, 10))
-		
-		if status < exit_num:
-			math_problem.append(number_generator)
-			math_problem.append(random.choice(math_operators))
-		elif status == exit_num:
-			math_problem.append(number_generator)
-			math_problem = ' '.join(math_problem)
+def generate(total_questions, total_constants):
+	math_operators = ['+', '-', '*', '/']
+	global questions
+	questions = {}
+	question_number = 0
 	
-	print(math_problem)
-	return eval(math_problem)
+	generated_questions = 0
+	generated_constants = 0
+	
+	
+	if generated_questions < total_questions:
+		while generated_questions < total_questions:
+			if generated_constants == 0:
+				generated_constants += 1
+				question_number += 1
+				questions[question_number] = str(random.randint(50, 1000)) + random.choice(math_operators)
+			
+			elif generated_constants != 0 and generated_constants < total_constants - 1:
+				generated_constants += 1
+				questions[question_number] += str(random.randint(50, 1000)) + random.choice(math_operators)
+			
+			elif generated_constants == total_constants - 1:
+				generated_constants += 1
+				questions[question_number] += str(random.randint(50, 1000))
+			
+			elif generated_constants == total_constants:
+				generated_questions += 1
+				generated_constants = 0
+	
+	
+	return questions
