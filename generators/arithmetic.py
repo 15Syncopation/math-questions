@@ -1,60 +1,37 @@
 import random
-import operator
 
-# Evaluate the questions
 
-def generate(total_questions, total_constants):
-	math_operators = ['+', '-', '*', '/']
-	
+math_operators = ['+', '-', '*', '/']
+questions = []
+answers = []
+
+
+def generator(total_questions, total_constants):
 	global questions
 	global answers
 	
-	questions = {}
-	question_number = 0
-	
-	answers = []
-	
-	generated_questions = 0
-	generated_constants = 0
-	
-	
-	if generated_questions < total_questions:
-		while generated_questions < total_questions:
-			if generated_constants == 0:
-				generated_constants += 1
-				question_number += 1
-				questions[question_number] = str(random.randint(50, 1000)) + random.choice(math_operators)
+	for question in range(total_questions):
+		for constant in range(total_constants):
+			random_number = str(random.randint(50, 1000))
+			random_operator = random.choice(math_operators)
 			
-			elif generated_constants != 0 and generated_constants < total_constants - 1:
-				generated_constants += 1
-				questions[question_number] += str(random.randint(50, 1000)) + random.choice(math_operators)
+			if len(questions) == 0:
+				questions.append(random_number + random_operator)
 			
-			elif generated_constants == total_constants - 1:
-				generated_constants += 1
-				questions[question_number] += str(random.randint(50, 1000))
+			elif constant == (total_constants - 1):
+				questions[question] += random_number
+				questions.append('')
+				
+				if question == (total_questions - 1):
+					questions.pop(-1)
 			
-			elif generated_constants == total_constants:
-				generated_questions += 1
-				generated_constants = 0
+			else:
+				questions[question] += random_number + random_operator
+	
 	
 	if len(questions) != 0:
-		for answer in questions.values():
+		for answer in questions:
 			answers.append(eval(answer))
-	
-	return 0
-
-
-def show(show_questions, show_answers, return_both):
-	if show_questions == True:
-		return questions
-		
-	elif show_answers == True:
-		return answers
-	
-	elif return_both == True:
-		return questions, answers
 
 
 
-generate(4, 2)
-print(show(False, False, True))
